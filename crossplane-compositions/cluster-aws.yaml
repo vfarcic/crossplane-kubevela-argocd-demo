@@ -9,6 +9,7 @@ spec:
   compositeTypeRef:
     apiVersion: devopstoolkitseries.com/v1alpha1
     kind: CompositeKubernetesCluster
+  writeConnectionSecretsToNamespace: crossplane-system
   patchSets:
   - name: metadata
     patches:
