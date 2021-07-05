@@ -20,29 +20,3 @@ spec:
     automated:
       selfHeal: true
       prune: true
-
----
-
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: staging
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  project: staging
-  source:
-    repoURL: https://github.com/vfarcic/crossplane-kubevela-argocd-demo
-    targetRevision: HEAD
-    path: staging
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: staging
-  syncPolicy:
-    automated:
-      selfHeal: true
-      prune: true
-    syncOptions:
-    - CreateNamespace=true
-
