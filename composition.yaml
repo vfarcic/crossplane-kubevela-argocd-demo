@@ -64,4 +64,3 @@ spec:
     - name: nodePool
       type: string
       jsonPath: ".status.nodePoolStatus"
-
