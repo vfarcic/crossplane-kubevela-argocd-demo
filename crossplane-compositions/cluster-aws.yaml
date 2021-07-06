@@ -35,8 +35,6 @@ spec:
     patches:
     - fromFieldPath: spec.id
       toFieldPath: spec.id
-    # - fromFieldPath: spec.id
-    #   toFieldPath: spec.providerConfigRef.name
     - fromFieldPath: metadata.annotations[crossplane.io/external-name]
       toFieldPath: metadata.annotations[crossplane.io/external-name]
     - fromFieldPath: spec.parameters.version
@@ -84,6 +82,8 @@ spec:
           instanceTypes:
             - t3.small
     patches:
+    - fromFieldPath: spec.id
+      toFieldPath: spec.id
     - fromFieldPath: spec.parameters.nodeSize
       toFieldPath: spec.forProvider.instanceTypes[0]
       transforms:

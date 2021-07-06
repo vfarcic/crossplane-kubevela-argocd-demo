@@ -30,8 +30,6 @@ spec:
     patches:
     - fromFieldPath: spec.id
       toFieldPath: spec.id
-    - fromFieldPath: spec.id
-      toFieldPath: spec.providerConfigRef.name
     - fromFieldPath: metadata.uid
       toFieldPath: spec.writeConnectionSecretToRef.name
       transforms:
