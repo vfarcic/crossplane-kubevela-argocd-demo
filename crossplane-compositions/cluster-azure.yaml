@@ -38,6 +38,8 @@ spec:
     patches:
     - fromFieldPath: spec.id
       toFieldPath: spec.id
+    - fromFieldPath: spec.id
+      toFieldPath: spec.providerConfigRef.name
     - fromFieldPath: metadata.labels.resourcegroup
       toFieldPath: spec.resourceGroupNameRef.name
     - fromFieldPath: spec.parameters.version
@@ -63,6 +65,12 @@ spec:
       toFieldPath: status.nodePoolStatus
     - fromFieldPath: spec.writeConnectionSecretToRef.namespace
       toFieldPath: spec.writeConnectionSecretToRef.namespace
+    - fromFieldPath: metadata.uid
+      toFieldPath: spec.writeConnectionSecretToRef.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-akscluster"
     readinessChecks:
     - type: MatchString
       fieldPath: "status.state"
@@ -77,13 +85,30 @@ spec:
           secretRef:
             key: kubeconfig
     patches:
-      - fromFieldPath: spec.writeConnectionSecretToRef.namespace
-        toFieldPath: spec.credentials.secretRef.namespace
-      - fromFieldPath: "metadata.uid"
-        toFieldPath: spec.credentials.secretRef.name
-        transforms:
-          - type: string
-            string:
-              fmt: "%s-ekscluster"
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+      toFieldPath: spec.credentials.secretRef.namespace
+    - fromFieldPath: metadata.uid
+      toFieldPath: spec.credentials.secretRef.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-akscluster"
     readinessChecks:
       - type: None
+  - name: kubevela
+    base:
+      apiVersion: helm.crossplane.io/v1beta1
+      kind: Release
+      spec:
+        rollbackLimit: 3
+        forProvider:
+          namespace: vela-system
+          chart:
+            name: vela-core
+            repository: https://charts.kubevela.net/core
+            version: "1.0.7"
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: spec.providerConfigRef.name
