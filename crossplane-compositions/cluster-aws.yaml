@@ -351,6 +351,14 @@ spec:
     patches:
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
+    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+      toFieldPath: spec.credentials.secretRef.namespace
+    - fromFieldPath: metadata.uid
+      toFieldPath: spec.credentials.secretRef.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-ekscluster"
     readinessChecks:
       - type: None
   - name: kubevela
