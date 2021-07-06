@@ -33,6 +33,8 @@ spec:
             subnetIdSelector:
               matchControllerRef: true
     patches:
+    - fromFieldPath: spec.id
+      toFieldPath: spec.id
     - fromFieldPath: metadata.annotations[crossplane.io/external-name]
       toFieldPath: metadata.annotations[crossplane.io/external-name]
     - fromFieldPath: spec.parameters.version
@@ -360,7 +362,6 @@ spec:
       toFieldPath: status.helmName
     # - fromFieldPath: metadata.name
     #   toFieldPath: spec.credentialsSecretRef.name
-    # - type: ToCompositeFieldPath
     readinessChecks:
       - type: None
   - name: kubevela
