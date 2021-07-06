@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: crossplane-providers
+  name: team-a-infra
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: production
   source:
-    path: crossplane-providers
+    path: team-a-infra
     repoURL: https://github.com/vfarcic/crossplane-kubevela-argocd-demo
     targetRevision: HEAD
   destination:
@@ -17,5 +17,4 @@ spec:
     automated:
       selfHeal: true
       prune: true
-    syncOptions:
-    - Validate=false
+
