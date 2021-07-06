@@ -376,5 +376,5 @@ spec:
             repository: https://charts.kubevela.net/core
             version: "1.0.7"
     patches:
-    - fromFieldPath: spec.providerConfigRef.name
+    - fromFieldPath: spec.id
       toFieldPath: spec.providerConfigRef.name
