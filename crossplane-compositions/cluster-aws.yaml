@@ -346,18 +346,18 @@ spec:
           source: Secret
           secretRef:
             key: kubeconfig
-    # patches:
+    patches:
       # - fromFieldPath: metadata.uid
       #   toFieldPath: spec.credentials.secretRef.name
       #   transforms:
       #     - type: string
       #       string:
       #         fmt: "%s-ekscluster"
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
     # - fromFieldPath: metadata.name
     #   toFieldPath: spec.credentialsSecretRef.name
     # - type: ToCompositeFieldPath
-    #   fromFieldPath: spec.id
-    #   toFieldPath: status.helmName
     readinessChecks:
       - type: None
   - name: kubevela
