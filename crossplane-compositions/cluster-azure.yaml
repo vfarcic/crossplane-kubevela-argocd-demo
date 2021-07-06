@@ -36,8 +36,6 @@ spec:
         nodeCount: 1
         nodeVMSize: Standard_D2_v2
     patches:
-    - fromFieldPath: spec.id
-      toFieldPath: spec.id
     - fromFieldPath: metadata.labels.resourcegroup
       toFieldPath: spec.resourceGroupNameRef.name
     - fromFieldPath: spec.parameters.version
