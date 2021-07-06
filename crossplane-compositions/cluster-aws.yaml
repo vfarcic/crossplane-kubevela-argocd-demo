@@ -349,19 +349,8 @@ spec:
           secretRef:
             key: kubeconfig
     patches:
-      # - fromFieldPath: metadata.uid
-      #   toFieldPath: spec.credentials.secretRef.name
-      #   transforms:
-      #     - type: string
-      #       string:
-      #         fmt: "%s-ekscluster"
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-    - type: ToCompositeFieldPath
-      fromFieldPath: spec.id
-      toFieldPath: status.helmName
-    # - fromFieldPath: metadata.name
-    #   toFieldPath: spec.credentialsSecretRef.name
     readinessChecks:
       - type: None
   - name: kubevela
@@ -377,11 +366,5 @@ spec:
             repository: https://charts.kubevela.net/core
             version: "1.0.7"
     patches:
-      # - fromFieldPath: metadata.labels
-      #   toFieldPath: metadata.labels
-    #   - fromFieldPath: metadata.annotations
-    #     toFieldPath: metadata.annotations
-    # - fromFieldPath: status.helmName
-    #   toFieldPath: spec.providerRef.name
     - fromFieldPath: spec.providerConfigRef.name
       toFieldPath: spec.providerConfigRef.name

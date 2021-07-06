@@ -28,10 +28,10 @@ spec:
         writeConnectionSecretToRef:
           namespace: crossplane-system
     patches:
-    - type: PatchSet
-      patchSetName: metadata
-    - fromFieldPath: "metadata.uid"
-      toFieldPath: "spec.writeConnectionSecretToRef.name"
+    - fromFieldPath: spec.id
+      toFieldPath: spec.id
+    - fromFieldPath: metadata.uid
+      toFieldPath: spec.writeConnectionSecretToRef.name
       transforms:
       - type: string
         string:
