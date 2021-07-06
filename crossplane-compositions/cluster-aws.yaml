@@ -359,7 +359,7 @@ spec:
       toFieldPath: metadata.name
     - type: ToCompositeFieldPath
       fromFieldPath: spec.id
-      toFieldPath: metadata.annotations[crossplane.io/helm-name]
+      toFieldPath: status.helmName
     readinessChecks:
       - type: None
   - name: kubevela
@@ -379,5 +379,5 @@ spec:
       #   toFieldPath: metadata.labels
     #   - fromFieldPath: metadata.annotations
     #     toFieldPath: metadata.annotations
-    - fromFieldPath: metadata.annotations[crossplane.io/helm-name]
+    - fromFieldPath: status.helmName
       toFieldPath: spec.providerRef.name
