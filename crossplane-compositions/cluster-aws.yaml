@@ -355,6 +355,9 @@ spec:
       #         fmt: "%s-ekscluster"
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
+    - type: ToCompositeFieldPath
+      fromFieldPath: spec.id
+      toFieldPath: status.helmName
     # - fromFieldPath: metadata.name
     #   toFieldPath: spec.credentialsSecretRef.name
     # - type: ToCompositeFieldPath
