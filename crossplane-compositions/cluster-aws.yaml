@@ -353,8 +353,13 @@ spec:
       #     - type: string
       #       string:
       #         fmt: "%s-ekscluster"
-      - fromFieldPath: metadata.name
-        toFieldPath: spec.credentialsSecretRef.name
+    # - fromFieldPath: metadata.name
+    #   toFieldPath: spec.credentialsSecretRef.name
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+    - type: ToCompositeFieldPath
+      fromFieldPath: spec.id
+      toFieldPath: metadata.annotations[crossplane.io/helm-name]
     readinessChecks:
       - type: None
   - name: kubevela
@@ -369,10 +374,10 @@ spec:
             name: vela-core
             repository: https://charts.kubevela.net/core
             version: "1.0.7"
-    # patches:
-    #   - fromFieldPath: metadata.labels
-    #     toFieldPath: metadata.labels
+    patches:
+      # - fromFieldPath: metadata.labels
+      #   toFieldPath: metadata.labels
     #   - fromFieldPath: metadata.annotations
     #     toFieldPath: metadata.annotations
-    #   - fromFieldPath: spec.providerConfigRef.name
-    #     toFieldPath: spec.providerConfigRef.name
+    - fromFieldPath: metadata.annotations[crossplane.io/helm-name]
+      toFieldPath: spec.providerRef.name
