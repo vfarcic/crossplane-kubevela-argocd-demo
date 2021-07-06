@@ -54,9 +54,9 @@ spec:
               nodePoolStatus:
                 description: The status of the node pool
                 type: string
-              # helmName:
-              #   description: The name of the Helm provider
-              #   type: string
+              helmName:
+                description: The name of the Helm provider
+                type: string
     additionalPrinterColumns:
     - name: clusterName
       type: string
