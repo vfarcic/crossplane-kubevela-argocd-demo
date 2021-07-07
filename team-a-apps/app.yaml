@@ -1,0 +1,72 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-toolkit
+  labels:
+    app: devops-toolkit
+spec:
+  selector:
+    matchLabels:
+      app: devops-toolkit
+  template:
+    metadata:
+      labels:
+        app: devops-toolkit
+    spec:
+      containers:
+      - name: devops-toolkit
+        image: vfarcic/devops-toolkit-series:latest
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-toolkit
+  labels:
+    app: devops-toolkit
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: devops-toolkit
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: devops-toolkit
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+           name: devops-toolkit
+           port:
+             number: 80
+    host: acme.com
