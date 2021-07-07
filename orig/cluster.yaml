@@ -1,9 +1,9 @@
----
+# ---
 
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: team-a
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: team-a
 
 ---
 
@@ -23,6 +23,6 @@ spec:
     nodeSize: small
     # version: "1.20"
     minNodeCount: 3
-  writeConnectionSecretToRef:
-    namespace: team-a
-    name: cluster
+  # writeConnectionSecretToRef:
+  #   namespace: team-a
+  #   name: cluster

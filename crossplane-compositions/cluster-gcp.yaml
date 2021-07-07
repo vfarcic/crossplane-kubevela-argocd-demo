@@ -9,7 +9,7 @@ spec:
   compositeTypeRef:
     apiVersion: devopstoolkitseries.com/v1alpha1
     kind: CompositeKubernetesCluster
-  writeConnectionSecretsToNamespace: crossplane-system
+  # writeConnectionSecretsToNamespace: crossplane-system
   patchSets:
   - name: metadata
     patches:
@@ -34,8 +34,8 @@ spec:
       - type: string
         string:
           fmt: "%s-gkecluster"
-    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
-      toFieldPath: spec.writeConnectionSecretToRef.namespace
+    # - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+    #   toFieldPath: spec.writeConnectionSecretToRef.namespace
     - fromFieldPath: spec.parameters.version
       toFieldPath: spec.forProvider.initialClusterVersion
     - type: ToCompositeFieldPath
@@ -75,8 +75,8 @@ spec:
     patches:
     - type: PatchSet
       patchSetName: metadata
-    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
-      toFieldPath: spec.credentials.secretRef.namespace
+    # - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+    #   toFieldPath: spec.credentials.secretRef.namespace
     - fromFieldPath: spec.parameters.minNodeCount
       toFieldPath: spec.forProvider.initialNodeCount
     - fromFieldPath: spec.parameters.minNodeCount
@@ -108,8 +108,8 @@ spec:
     patches:
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
-      toFieldPath: spec.credentials.secretRef.namespace
+    # - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+    #   toFieldPath: spec.credentials.secretRef.namespace
     - fromFieldPath: metadata.uid
       toFieldPath: spec.credentials.secretRef.name
       transforms:

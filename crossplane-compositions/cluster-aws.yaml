@@ -9,7 +9,7 @@ spec:
   compositeTypeRef:
     apiVersion: devopstoolkitseries.com/v1alpha1
     kind: CompositeKubernetesCluster
-  writeConnectionSecretsToNamespace: crossplane-system
+  # writeConnectionSecretsToNamespace: crossplane-system
   patchSets:
   - name: metadata
     patches:
@@ -49,8 +49,8 @@ spec:
     - type: ToCompositeFieldPath
       fromFieldPath: status.atProvider.status
       toFieldPath: status.controlPlaneStatus
-    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
-      toFieldPath: spec.writeConnectionSecretToRef.namespace
+    # - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+    #   toFieldPath: spec.writeConnectionSecretToRef.namespace
     readinessChecks:
     - type: MatchString
       fieldPath: status.atProvider.status
@@ -349,8 +349,8 @@ spec:
     patches:
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
-      toFieldPath: spec.credentials.secretRef.namespace
+    # - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+    #   toFieldPath: spec.credentials.secretRef.namespace
     - fromFieldPath: metadata.uid
       toFieldPath: spec.credentials.secretRef.name
       transforms:
