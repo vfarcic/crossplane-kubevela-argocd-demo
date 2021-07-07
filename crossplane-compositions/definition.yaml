@@ -10,7 +10,7 @@ spec:
   group: devopstoolkitseries.com
   names:
     kind: CompositeCluster
-    plural: CompositeClusters
+    plural: compositeclusters
   claimNames:
     kind: KubernetesCluster
     plural: kubernetesclusters
