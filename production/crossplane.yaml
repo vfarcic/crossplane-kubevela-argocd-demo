@@ -1,22 +1,66 @@
+---
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: crossplane
+  name: crossplane-providers
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: production
   source:
-    chart: crossplane
-    repoURL: https://charts.crossplane.io/stable
-    targetRevision: "1.3.0"
+    path: crossplane-providers
+    repoURL: https://github.com/vfarcic/crossplane-kubevela-argocd-demo
+    targetRevision: HEAD
   destination:
-    namespace: crossplane-system
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
       selfHeal: true
       prune: true
-    syncOptions:
-    - CreateNamespace=true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane-configs
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: production
+  source:
+    path: crossplane-configs
+    repoURL: https://github.com/vfarcic/crossplane-kubevela-argocd-demo
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane-compositions
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: production
+  source:
+    path: crossplane-compositions
+    repoURL: https://github.com/vfarcic/crossplane-kubevela-argocd-demo
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+
