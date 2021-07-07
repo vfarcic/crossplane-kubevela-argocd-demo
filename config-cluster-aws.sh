@@ -43,5 +43,3 @@ git commit -m "Team A apps"
 
 git push
 
-rm kubeconfig.yaml
-
