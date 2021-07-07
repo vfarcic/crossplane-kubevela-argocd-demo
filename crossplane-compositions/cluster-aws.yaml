@@ -374,3 +374,18 @@ spec:
     patches:
     - fromFieldPath: spec.id
       toFieldPath: spec.providerConfigRef.name
+  - name: ingress
+    base:
+      apiVersion: helm.crossplane.io/v1beta1
+      kind: Release
+      spec:
+        rollbackLimit: 3
+        forProvider:
+          namespace: ingress-nginx
+          chart:
+            name: ingress-nginx
+            repository: https://kubernetes.github.io/ingress-nginx
+            version: "3.34.0"
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: spec.providerConfigRef.name
