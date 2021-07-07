@@ -1,5 +1,5 @@
 apiVersion: devopstoolkitseries.com/v1alpha1
-kind: CompositeKubernetesCluster
+kind: CompositeCluster
 metadata:
   name: team-a
   labels:

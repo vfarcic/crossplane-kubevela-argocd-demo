@@ -1,7 +1,7 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: compositekubernetesclusters.devopstoolkitseries.com
+  name: CompositeClusters.devopstoolkitseries.com
 spec:
   connectionSecretKeys:
   - kubeconfig
@@ -9,8 +9,8 @@ spec:
     name: cluster-google
   group: devopstoolkitseries.com
   names:
-    kind: CompositeKubernetesCluster
-    plural: compositekubernetesclusters
+    kind: CompositeCluster
+    plural: CompositeClusters
   claimNames:
     kind: KubernetesCluster
     plural: kubernetesclusters
