@@ -1,0 +1,147 @@
+apiVersion: core.oam.dev/v1beta1
+kind: ComponentDefinition
+metadata:
+  name: backend
+  annotations:
+    definition.oam.dev/description: "It's backend and I'm too lazy to write descriptions"
+spec:
+  workload:
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+  schematic:
+    cue:
+      template: |
+        output: {
+            apiVersion: "apps/v1"
+            kind:       "Deployment"
+            spec: {
+                selector: matchLabels: {
+                    "app.oam.dev/component": context.name
+                }
+                template: {
+                    metadata: labels: {
+                        "app.oam.dev/component": context.name
+                    }
+                    spec: {
+                        containers: [{
+                            name:  context.name
+                            image: parameter.image
+
+                            if parameter["cmd"] != _|_ {
+                                command: parameter.cmd
+                            }
+                        }]
+                    }
+                }
+            }
+        }
+        parameter: {
+            image: string
+            cmd?: [...string]
+        }
+
+---
+
+apiVersion: core.oam.dev/v1beta1
+kind: ComponentDefinition
+metadata:
+  name: frontend
+  annotations:
+    definition.oam.dev/description: "It's frontend and I'm too lazy to write descriptions"
+spec:
+  workload:
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+  schematic:
+    kube:
+      template:
+        apiVersion: apps/v1
+        kind: Deployment
+        spec:
+          selector:
+            matchLabels:
+              app.oam.dev/component: frontend
+          template:
+            metadata:
+              labels:
+                app.oam.dev/component: frontend
+            spec:
+              containers:
+              - name: frontend
+                ports:
+                - containerPort: 80
+                livenessProbe:
+                  httpGet:
+                    path: /
+                    port: 80
+                readinessProbe:
+                  httpGet:
+                    path: /
+                    port: 80
+      parameters:
+      - name: name
+        required: true
+        type: string
+        fieldPaths:
+        - metadata.name
+        - metadata.labels.app
+        - spec.selector.matchLabels.app
+        - spec.template.metadata.labels.app
+      - name: image
+        required: true
+        type: string
+        fieldPaths:
+        - spec.template.spec.containers[0].image
+      - name: port
+        required: false
+        type: number
+        fieldPaths:
+        - spec.template.spec.containers[0].ports[0].containerPort
+        - spec.template.spec.containers[0].livenessProbe.httpGet.port
+        - spec.template.spec.containers[0].readinessProbe.httpGet.port
+
+---
+
+apiVersion: core.oam.dev/v1beta1
+kind: TraitDefinition
+metadata:
+  annotations:
+    definition.oam.dev/description: "configure k8s HPA for Deployment"
+  name: autoscaler
+spec:
+  appliesToWorkloads:
+    - frontend
+  schematic:
+    cue:
+      template: |
+        outputs: hpa: {
+            apiVersion: "autoscaling/v2beta2"
+            kind:       "HorizontalPodAutoscaler"
+            metadata: name: context.name
+            spec: {
+                scaleTargetRef: {
+                    apiVersion: "apps/v1"
+                    kind:       "Deployment"
+                    name:       context.name
+                }
+                minReplicas: parameter.min
+                maxReplicas: parameter.max
+                metrics: [{
+                    type: "Resource"
+                    resource: {
+                        name: "cpu"
+                        target: {
+                            type:               "Utilization"
+                            averageUtilization: parameter.cpuUtil
+                        }
+                    }
+                }]
+            }
+        }
+        parameter: {
+            min:     *2 | int
+            max:     *6 | int
+            cpuUtil: *80 | int
+        }
