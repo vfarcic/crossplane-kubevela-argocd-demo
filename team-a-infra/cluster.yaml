@@ -8,7 +8,7 @@ spec:
   id: team-a
   compositionRef:
     # Possible values cluster-google, cluster-azure, cluster-aws
-    name: cluster-aws
+    name: cluster-azure
   parameters:
     # Possible values small, medium, large
     nodeSize: small
