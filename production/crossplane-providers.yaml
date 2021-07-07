@@ -17,5 +17,3 @@ spec:
     automated:
       selfHeal: true
       prune: true
-    syncOptions:
-    - Validate=false
