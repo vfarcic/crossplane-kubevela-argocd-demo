@@ -6,7 +6,6 @@ metadata:
     cluster-owner: vfarcic
 spec:
   compositionRef:
-    # Possible values cluster-google, cluster-azure, cluster-aws
     name: cluster-aws
   parameters:
     # Possible values small, medium, large
