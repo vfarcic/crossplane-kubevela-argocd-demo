@@ -12,8 +12,8 @@ spec:
     kind: CompositeCluster
     plural: compositeclusters
   claimNames:
-    kind: KubernetesCluster
-    plural: kubernetesclusters
+    kind: ClusterClaim
+    plural: clusterclaims
   versions:
   - name: v1alpha1
     served: true
