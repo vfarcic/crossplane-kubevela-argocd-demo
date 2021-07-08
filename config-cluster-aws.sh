@@ -11,8 +11,6 @@ mkdir -p $TEAM_NAME-apps
 
 touch $TEAM_NAME-apps/dummy
 
-mkdir -p $TEAM_NAME-app-reqs
-
 cp -R team-app-reqs $TEAM_NAME-app-reqs
 
 aws eks --region us-east-1 \
