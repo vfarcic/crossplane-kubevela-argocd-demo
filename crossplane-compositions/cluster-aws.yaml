@@ -22,7 +22,7 @@ spec:
       spec:
         forProvider:
           region: us-east-1
-          version: "1.20"
+          version: "1.21"
           roleArnSelector:
             matchControllerRef: true
             matchLabels:
@@ -33,8 +33,8 @@ spec:
             subnetIdSelector:
               matchControllerRef: true
     patches:
-    - fromFieldPath: metadata.annotations[crossplane.io/external-name]
-      toFieldPath: metadata.annotations[crossplane.io/external-name]
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
     - fromFieldPath: spec.parameters.version
       toFieldPath: spec.forProvider.version
     - fromFieldPath: metadata.uid
@@ -44,7 +44,7 @@ spec:
           string:
             fmt: "%s-ekscluster"
     - type: ToCompositeFieldPath
-      fromFieldPath: metadata.annotations[crossplane.io/external-name]
+      fromFieldPath: spec.id
       toFieldPath: status.clusterName
     - type: ToCompositeFieldPath
       fromFieldPath: status.atProvider.status
@@ -80,6 +80,8 @@ spec:
           instanceTypes:
             - t3.small
     patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
     - fromFieldPath: spec.parameters.nodeSize
       toFieldPath: spec.forProvider.instanceTypes[0]
       transforms:
@@ -125,6 +127,13 @@ spec:
                   }
               ]
             }
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-controlplane"
   - name: iamrole-nodegroup
     base:
       apiVersion: identity.aws.crossplane.io/v1beta1
@@ -151,6 +160,13 @@ spec:
                   }
               ]
             }
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-nodegroup"
   - name: iamattachment-controlplane
     base:
       apiVersion: identity.aws.crossplane.io/v1beta1
@@ -162,6 +178,13 @@ spec:
             matchControllerRef: true
             matchLabels:
               role: controlplane
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-controlplane"
   - name: iamattachment-service
     base:
       apiVersion: identity.aws.crossplane.io/v1beta1
@@ -173,6 +196,13 @@ spec:
             matchControllerRef: true
             matchLabels:
               role: controlplane
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-service"
   - name: iamattachment-worker
     base:
       apiVersion: identity.aws.crossplane.io/v1beta1
@@ -184,6 +214,13 @@ spec:
             matchControllerRef: true
             matchLabels:
               role: nodegroup
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-worker"
   - name: iamattachment-cni
     base:
       apiVersion: identity.aws.crossplane.io/v1beta1
@@ -195,6 +232,13 @@ spec:
             matchControllerRef: true
             matchLabels:
               role: nodegroup
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-cni"
   - name: iamattachment-registry
     base:
       apiVersion: identity.aws.crossplane.io/v1beta1
@@ -206,6 +250,13 @@ spec:
             matchControllerRef: true
             matchLabels:
               role: nodegroup
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-registry"
   - name: vpc-nodepool
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
@@ -214,11 +265,10 @@ spec:
         forProvider:
           region: us-east-1
           cidrBlock: 10.0.0.0/16
-          tags:
-          - key: Name
-            value: devops-catalog
-          - key: kubernetes.io/cluster/devops-catalog
-            value: shared
+          enableDnsSupport: true
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
   - name: sc-nodepool
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
@@ -236,6 +286,9 @@ spec:
             ipProtocol: "-1"
             ipRanges:
             - cidrIp: "0.0.0.0/0"
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
   - name: subnet-nodepool-1a
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
@@ -253,10 +306,15 @@ spec:
             matchControllerRef: true
           mapPublicIPOnLaunch: true
           tags:
-            - key: Name
-              value: devops-catalog
-            - key: kubernetes.io/cluster/devops-catalog
-              value: shared
+          - key: kubernetes.io/role/elb
+            value: "1"
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-1a"
   - name: subnet-nodepool-1b
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
@@ -274,10 +332,15 @@ spec:
             matchControllerRef: true
           mapPublicIPOnLaunch: true
           tags:
-            - key: Name
-              value: devops-catalog
-            - key: kubernetes.io/cluster/devops-catalog
-              value: shared
+          - key: kubernetes.io/role/elb
+            value: "1"
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-1b"
   - name: subnet-nodepool-1c
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
@@ -295,10 +358,15 @@ spec:
             matchControllerRef: true
           mapPublicIPOnLaunch: true
           tags:
-            - key: Name
-              value: devops-catalog
-            - key: kubernetes.io/cluster/devops-catalog
-              value: shared
+          - key: kubernetes.io/role/elb
+            value: "1"
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-1c"
   - name: gateway
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
@@ -308,6 +376,9 @@ spec:
           region: us-east-1
           vpcIdSelector:
             matchControllerRef: true
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
   - name: routetable
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
@@ -337,6 +408,9 @@ spec:
                 matchLabels:
                   zone: us-east-1c
                   access: public
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
   - name: helm
     base:
       apiVersion: helm.crossplane.io/v1beta1
@@ -372,5 +446,7 @@ spec:
             repository: https://charts.kubevela.net/core
             version: "1.0.7"
     patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
     - fromFieldPath: spec.id
       toFieldPath: spec.providerConfigRef.name

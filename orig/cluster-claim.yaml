@@ -6,12 +6,10 @@ metadata:
     cluster-owner: vfarcic
 spec:
   id: team-a
-  resourceRef:
-    apiVersion: devopstoolkitseries.com/v1alpha1
-    kind: CompositeCluster
-    name: team-aaa
-  # compositionRef:
-  #   name: cluster-aws
+  compositionSelector:
+    matchLabels:
+      provider: aws
+      cluster: eks
   parameters:
     # Possible values small, medium, large
     nodeSize: small
