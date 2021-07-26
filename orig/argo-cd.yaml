@@ -16,7 +16,7 @@ spec:
           ingress:
             enabled: true
             hosts:
-              argo-cd.192.168.64.4.nip.io
+              acme.com
           extraArgs:
             - --insecure
         controller:
