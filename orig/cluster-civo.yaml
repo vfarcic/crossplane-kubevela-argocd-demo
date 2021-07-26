@@ -7,7 +7,7 @@ spec:
   name: devops-toolkit
   instances: 1
   size: g3.k3s.small
-  applications: 
+  applications:
     - prometheus-operator
   connectionDetails:
     connectionSecretNamePrefix: cluster-civo
