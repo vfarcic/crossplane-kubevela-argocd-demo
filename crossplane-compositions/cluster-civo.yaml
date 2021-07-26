@@ -22,11 +22,6 @@ spec:
       spec:
         instances: 1
         size: g3.k3s.small
-        applications:
-          - prometheus-operator
-          - sealed-secrets
-          - istio
-          - loki-stack
         connectionDetails:
           connectionSecretNamePrefix: cluster-civo
           connectionSecretNamespace: crossplane-system
