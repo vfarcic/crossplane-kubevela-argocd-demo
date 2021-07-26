@@ -8,20 +8,9 @@ metadata:
 spec:
   project: production
   source:
-    path: argo/argo-cd
-    repoURL: https://argoproj.github.io/argo-helm
-    helm:
-      values:
-        server:
-          ingress:
-            enabled: true
-            hosts:
-              argo-cd.192.168.64.4.nip.io
-          extraArgs:
-            - --insecure
-        controller:
-          args:
-            appResyncPeriod: 30
+    path: argo-cd/overlays/production
+    repoURL: https://github.com/vfarcic/crossplane-kubevela-argocd-demo
+    targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:
@@ -29,5 +18,4 @@ spec:
       selfHeal: true
       prune: true
       allowEmpty: true
-    syncOptions:
-    - CreateNamespace=true
+
