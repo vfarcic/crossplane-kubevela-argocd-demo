@@ -7,5 +7,5 @@ spec:
     spec:
       containers:
       - name: argocd-server
-        command: [argocd-server, --insecure]
+        command: [argocd-server, --staticassets, /shared/app, --insecure]
 
