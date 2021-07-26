@@ -19,7 +19,7 @@ kind: ProviderConfig
 metadata:
   name: provider-civo
 spec:
-  region: lon1
+  region: nyc1
   credentials:
     source: Secret
     secretRef:
