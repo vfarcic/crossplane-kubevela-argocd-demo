@@ -24,5 +24,5 @@ spec:
     source: Secret
     secretRef:
       namespace: crossplane-system
-      name: civo-provider-secret
-      key: credentials
+      name: civo-creds
+      key: creds
