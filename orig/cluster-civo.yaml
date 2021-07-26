@@ -11,6 +11,6 @@ spec:
     - prometheus-operator
   connectionDetails:
     connectionSecretNamePrefix: cluster-civo
-    connectionSecretNamespace: default
+    connectionSecretNamespace: crossplane-system
   providerConfigRef:
     name: provider-civo
