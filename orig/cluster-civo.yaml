@@ -1,0 +1,16 @@
+
+kind: CivoKubernetes
+apiVersion: cluster.civo.crossplane.io/v1alpha1
+metadata: 
+  name: devops-toolkit
+spec:
+  name: devops-toolkit
+  instances: 1
+  size: g3.k3s.small
+  applications: 
+    - prometheus-operator
+  connectionDetails:
+    connectionSecretNamePrefix: cluster-civo
+    connectionSecretNamespace: default
+  providerConfigRef:
+    name: provider-civo

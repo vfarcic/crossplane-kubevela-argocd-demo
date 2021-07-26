@@ -25,4 +25,5 @@ spec:
     secretRef:
       namespace: crossplane-system
       name: civo-creds
-      key: creds
+      # key: creds
+      apiKey: creds
