@@ -9,6 +9,7 @@ spec:
   size: g3.k3s.small
   applications:
     - prometheus-operator
+    - argo-cd
   connectionDetails:
     connectionSecretNamePrefix: cluster-civo
     connectionSecretNamespace: crossplane-system
