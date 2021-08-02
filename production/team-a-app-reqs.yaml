@@ -12,7 +12,7 @@ spec:
     repoURL: https://github.com/vfarcic/crossplane-kubevela-argocd-demo
     targetRevision: HEAD
   destination:
-    server: 
+    server: https://9679D6DAC46D68EDFE5978E0B8E45D5E.gr7.us-east-1.eks.amazonaws.com
     namespace: production
   syncPolicy:
     automated:
