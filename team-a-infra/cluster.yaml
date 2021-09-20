@@ -1,0 +1,15 @@
+apiVersion: devopstoolkitseries.com/v1alpha1
+kind: CompositeCluster
+metadata:
+  name: team-a
+  labels:
+    cluster-owner: vfarcic
+spec:
+  id: team-a
+  compositionRef:
+    name: cluster-aws
+  parameters:
+    # Possible values small, medium, large
+    nodeSize: small
+    # version: "1.20"
+    # minNodeCount: 1
